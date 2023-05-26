@@ -1,5 +1,5 @@
-import { Entity } from '../../../core/entities/entity'
-import { Adapter } from '../../adapter'
+import { Entity } from '../../core/entities/entity'
+import { Adapter } from '../adapter'
 
 export class IMAdapter<T extends Entity> implements Adapter<T> {
   private entities: T[] = []
