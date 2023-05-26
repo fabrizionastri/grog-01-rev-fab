@@ -1,5 +1,5 @@
 import { productsMock } from '../../../mock/arrays/products'
-import { IMAdapter } from '../../adapters/primary/im.adapter'
+import { IMAdapter } from '../../adapters/primary/inMemory.adapter'
 import { Product } from '../../../src/core/entities/product'
 
 describe('getAllProducts', () => {

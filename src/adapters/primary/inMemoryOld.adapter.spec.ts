@@ -1,6 +1,6 @@
-import { productsMock } from '../../../../mock/arrays/products'
-import { IMAdapter } from '../../primary/im.adapter'
-import { Product } from '../../../../src/core/entities/product'
+import { productsMock } from '../../../mock/arrays/products'
+import { IMAdapter } from './inMemory.adapter'
+import { Product } from '../../core/entities/product'
 
 describe('InMemoryProductAdapter', () => {
   let productAdapter: IMAdapter<Product>

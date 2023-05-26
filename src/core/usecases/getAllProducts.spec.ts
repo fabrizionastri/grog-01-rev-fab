@@ -1,9 +1,9 @@
 import { productsMock } from '../../../mock/arrays/products'
-import { IMAdapter } from '../../adapters/primary/im.adapter'
-import { JSAdapter } from '../../../src/adapters/secondary/jsonServer/js.adapter'
+import { IMAdapter } from '../../adapters/primary/inMemory.adapter'
+import { JSAdapter } from '../../adapters/secondary/jsonServer/js.adapter'
 
-import { Product } from '../../../src/core/entities/product'
-import { getAllProducts } from '../../../src/core/usecases/getAllProducts'
+import { Product } from '../entities/product'
+import { getAllProducts } from './getAllProducts'
 
 describe('getByIdProduct', () => {
   describe('IMAdapter<Product>', () => {
