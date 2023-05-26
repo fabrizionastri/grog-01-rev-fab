@@ -1,4 +1,3 @@
-
 import { Entity } from '../core/entities/entity'
 
 export interface Adapter<T extends Entity> {

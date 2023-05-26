@@ -1,23 +1,45 @@
-const plop = (message) => (message2) => ({
-  getAll() {
-    return `${message} ${message2} getAll`
-  },
-  getById(id) {
-    return `${message} ${message2} getById ${id}`
-  },
-  create(entity) {
-    return `${message} ${message2} create ${entity}`
-  },
-  createMany(entities) {
-    return `${message} ${message2} createMany ${entities}`
-  },
-  update(entity) {
-    return `${message} ${message2} update ${entity}`
-  },
-  delete(id) {
-    return `${message} ${message2} delete ${id}`
-  },
+const plop = (message) => (message2) => {
+  return {
+    getAll() {
+      return `${message} ${message2} getAll`
+    },
+    getById(id) {
+      return `${message} ${message2} getById ${id}`
+    },
+    create(entity) {
+      return `${message} ${message2} create ${entity}`
+    },
+    createMany(entities) {
+      return `${message} ${message2} createMany ${entities}`
+    },
+    update(entity) {
+      return `${message} ${message2} update ${entity}`
+    },
+    delete(id) {
+      return `${message} ${message2} delete ${id}`
+    },
+  }
+}
+
+const plop2 = (message) => (message2) => {
+  return {
+    getAll: () => `${message} ${message2} getAll`,
+    getById: (id) => `${message} ${message2} getById ${id}`,
+  }
+}
+
+const plop3 = (message) => (message2) => ({
+  getAll: () => `${message} ${message2} getAll`,
+  getById: (id) => `${message} ${message2} getById ${id}`,
 })
+
+const plop4 = (message) => (message2) => {
+  const msg = (nom) => `${message} ${message2} ${nom}`
+  return {
+    getAll: () => msg('getAll'),
+    getById: (id) => msg(`getById ${id}`),
+  }
+}
 
 const plip = plop('plip')
 

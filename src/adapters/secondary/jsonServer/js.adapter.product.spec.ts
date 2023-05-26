@@ -4,7 +4,7 @@
 
 describe('JSAdapter<Product>', () => {
   it('should be defined', () => {
-    expect(true).toBeTruthy();
+    expect(true).toBeTruthy()
   })
   // let productJSAdapter: JSAdapter<Product>
 
