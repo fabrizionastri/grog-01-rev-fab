@@ -1,35 +1,36 @@
 import { productsMock } from '../../../../mock/arrays/products'
-import { InMemoryProductAdapter } from './inMemoryProduct.adapter'
+import { IMAdapter } from '../../../../src/adapters/secondary/inMemory/im.adapter'
+import { Product } from '../../../../src/core/entities/product'
 
 describe('InMemoryProductAdapter', () => {
-  let adapter: InMemoryProductAdapter
+  let productAdapter: IMAdapter<Product>
 
   beforeEach(() => {
-    adapter = new InMemoryProductAdapter()
+    productAdapter = new IMAdapter<Product>()
   })
 
-  describe('listAll', () => {
+  describe('findAll', () => {
     it('returns an empty array when no products have been added', async () => {
-      const products = await adapter.listAll()
+      const products = await productAdapter.findAll()
       expect(products).toEqual([])
     })
 
     it('returns an array of products when products have been added', async () => {
-      adapter.feedWith(...productsMock)
-      const products = await adapter.listAll()
+      productAdapter.createMany(productsMock)
+      const products = await productAdapter.findAll()
       expect(products).toEqual(productsMock)
     })
   })
 
   describe('getById', () => {
     it('returns undefined when no product with the specified ID exists', async () => {
-      const product = await adapter.getbyId('999')
+      const product = await productAdapter.findById('999')
       expect(product).toBeUndefined()
     })
 
     it('returns the product with the specified ID when it exists', async () => {
-      adapter.feedWith(...productsMock)
-      const product = await adapter.getbyId('abc123')
+      productAdapter.createMany(productsMock)
+      const product = await productAdapter.findById('abc123')
       expect(product).toEqual(productsMock[0])
     })
   })

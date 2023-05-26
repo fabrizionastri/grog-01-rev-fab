@@ -5,5 +5,5 @@ export async function getProductById(
   id: string,
   productGateway: ProductGateway
 ): Promise<Product | undefined> {
-  return await productGateway.getbyId(id)
+  return await productGateway.findById(id)
 }

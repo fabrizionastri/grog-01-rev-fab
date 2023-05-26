@@ -1,16 +1,15 @@
 import { productsMock } from '../../../mock/arrays/products'
-import { InMemoryProductAdapter } from '../../adapters/secondary/inMemory/inMemoryProduct.adapter'
-import { Product } from '../entities/product'
-import { getProductById } from './getProductById'
+import { IMAdapter } from '../../../src/adapters/secondary/inMemory/im.adapter'
+import { Product } from '../../../src/core/entities/product'
 
 describe('listAllProducts', () => {
   describe('InMemoryProductAdapter', () => {
-    let productAdapter: InMemoryProductAdapter // on définit le type d'adapter qu'on va utiliser
+    let productAdapter: IMAdapter<Product> // on définit le type d'adapter qu'on va utiliser
     beforeEach(() => {
-      productAdapter = new InMemoryProductAdapter() // on purge avant chaque test
+      productAdapter = new IMAdapter<Product>() // on purge avant chaque test
     })
     it('should return undefined when there are no products', async () => {
-      const product = await getProductById('abc123', productAdapter)
+      const product = await productAdapter.findById('abc123')
       expect(product).toEqual(undefined)
     })
     it('should return one product from products entered manually', async () => {
@@ -24,14 +23,14 @@ describe('listAllProducts', () => {
         name: 'Pull',
         imgUrl: 'assets/pull.png',
       }
-      productAdapter.feedWith(tshirt, pull)
-      const product = await getProductById('abc123', productAdapter)
+      productAdapter.createMany([tshirt, pull])
+      const product = await productAdapter.findById('abc123')
       const expected: Product = tshirt
       expect(product).toEqual(expected)
     })
     it('should return one product from mock arrays data', async () => {
-      productAdapter.feedWith(...productsMock)
-      const product = await getProductById('abc123', productAdapter)
+      productAdapter.createMany(productsMock)
+      const product = await productAdapter.findById('abc123')
       const expected: Product = {
         id: 'abc123',
         name: 'T-shirt',

@@ -1,19 +1,23 @@
 import { Entity } from '../../../core/entities/entity'
-import { Gateway } from '../../../core/gateways/entity.gateway'
+import { Gateway } from '../../../core/gateways/gateway'
 
-export class InMemoryAdapter<T extends Entity> implements Gateway<T> {
+export class IMAdapter<T extends Entity> implements Gateway<T> {
   private entities: T[] = []
 
-  async listAll(): Promise<T[]> {
+  async findAll(): Promise<T[]> {
     return this.entities
   }
 
-  async getById(id: string): Promise<T | undefined> {
+  async findById(id: string): Promise<T | undefined> {
     return this.entities.find((entity) => entity.id === id)
   }
 
   async create(entity: T): Promise<void> {
     this.entities.push(entity)
+  }
+
+  async createMany(entities: T[]): Promise<void> {
+    this.entities.push(...entities)
   }
 
   async update(entity: T): Promise<void> {

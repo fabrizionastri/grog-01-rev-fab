@@ -1,29 +1,26 @@
-import express from 'express'
-import { listAllProducts } from '../../../core/usecases/listAllProducts'
-import { Express, Request, Response } from 'express'
-import { getProductById } from '../../../core/usecases/getProductById'
+import express, { Express, Request, Response } from 'express'
+import { JSAdapter } from '../../secondary/jsonServer/js.adapter'
 
 const expressPort = 3001
 const expressUrl = `http://localhost:${expressPort}`
 const app: Express = express()
 
+const productAdapter = new JSAdapter('products')
+
 app.use(express.json())
 
 app.get('/', (_req: Request, res: Response) => {
-  res.send('⚡️Server ')
+  res.send(`⚡️Server is running at ${expressUrl}`)
 })
 
 app.get('/products', async (_req: Request, res: Response) => {
-  const products = await listAllProducts(jsonServerProductAdapterFunction())
+  const products = await productAdapter.findAll()
   res.send(JSON.stringify(products))
   // res.send('⚡️products')
 })
 
 app.get('/products/:id', async (req: Request, res: Response) => {
-  const product = await getProductById(
-    req.params.id,
-    jsonServerProductAdapterFunction()
-  )
+  const product = await productAdapter.findById(req.params.id)
   res.send(JSON.stringify(product))
   // res.send('⚡️products')
 })

@@ -1,8 +1,8 @@
 import { productsMock } from '../../../mock/arrays/products'
-import { InMemoryProductAdapter } from '../../adapters/secondary/inMemory/inMemoryProduct.adapter'
+import { InMemoryProductAdapter } from '../../../src/adapters/secondary/inMemory/product.im.adapter'
 import { JsonServerProductAdapter } from '../../adapters/secondary/jsonServer/product.js.adapter.xold'
-import { Product } from '../entities/product'
-import { listAllProducts } from './listAllProducts'
+import { Product } from '../../../src/core/entities/product'
+import { listAllProducts } from '../../../src/core/usecases/listAllProducts'
 
 describe('getProductById', () => {
   describe('InMemoryProductAdapter', () => {

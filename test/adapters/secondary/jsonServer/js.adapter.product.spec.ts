@@ -1,6 +1,6 @@
 import { productsMock } from '../../../../mock/arrays/products'
-import { Product } from '../../../core/entities/product'
-import { JSAdapter } from './js.adapter'
+import { Product } from '../../../../src/core/entities/product'
+import { JSAdapter } from '../../../../src/adapters/secondary/jsonServer/js.adapter'
 
 describe('ProductJSAdapter', () => {
   let productJSAdapter: JSAdapter<Product>
@@ -14,7 +14,7 @@ describe('ProductJSAdapter', () => {
   })
 
   it('should list all products', async () => {
-    const products = await productJSAdapter.listAll()
+    const products = await productJSAdapter.findAll()
     expect(products).toEqual(productsMock)
   })
 })

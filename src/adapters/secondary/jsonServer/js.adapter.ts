@@ -1,6 +1,6 @@
 import Axios from 'axios'
 import { Entity } from '../../../core/entities/entity'
-import { Gateway } from '../../../core/gateways/entity.gateway'
+import { Gateway } from '../../../core/gateways/gateway'
 
 const axios = Axios.create({
   baseURL: 'http://localhost:3000',
@@ -8,15 +8,15 @@ const axios = Axios.create({
 })
 
 export class JSAdapter<T extends Entity> implements Gateway<T> {
-  constructor(private readonly resource: string) {}
+  constructor(private readonly resource: string) { }
 
-  async listAll(): Promise<T[]> {
+  async findAll(): Promise<T[]> {
     const res = await axios.get<T[]>(`/${this.resource}`)
     const entities = await res.data
     return entities
   }
 
-  async getById(id: string): Promise<T | undefined> {
+  async findById(id: string): Promise<T | undefined> {
     const res = await axios.get<T>(`/${this.resource}/${id}`)
     const entity = await res.data
     return entity

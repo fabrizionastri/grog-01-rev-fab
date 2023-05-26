@@ -1,6 +1,4 @@
 import { Product } from '../entities/product'
+import { Gateway } from './gateway';
 
-export interface ProductGateway {
-  listAll(): Promise<Product[]>
-  getbyId(id: string): Promise<Product | undefined>
-}
+export interface ProductGateway extends Gateway<Product> { }
