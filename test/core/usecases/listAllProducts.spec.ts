@@ -3,16 +3,16 @@ import { IMAdapter } from '../../../src/adapters/secondary/inMemory/im.adapter'
 import { JSAdapter } from '../../../src/adapters/secondary/jsonServer/js.adapter'
 
 import { Product } from '../../../src/core/entities/product'
-import { findAllProducts } from '../../../src/core/usecases/findAllProducts'
+import { getAllProducts } from '../../../src/core/usecases/getAllProducts'
 
-describe('findByIdProduct', () => {
+describe('getByIdProduct', () => {
   describe('IMAdapter<Product>', () => {
     let productAdapter: IMAdapter<Product> // on définit le type d'adapter qu'on va utiliser
     beforeEach(() => {
       productAdapter = new IMAdapter<Product>() // on purge avant chaque test
     })
     it('should return [] when there are no products', async () => {
-      const allProducts = await findAllProducts(productAdapter)
+      const allProducts = await getAllProducts(productAdapter)
       expect(allProducts).toEqual([])
     })
     it('should return all products entered manually', async () => {
@@ -27,13 +27,13 @@ describe('findByIdProduct', () => {
         imgUrl: 'assets/pull.png',
       }
       productAdapter.createMany([tshirt, pull])
-      const allProducts = await productAdapter.findAll()
+      const allProducts = await productAdapter.getAll()
       const expected: Product[] = [tshirt, pull]
       expect(allProducts).toEqual(expected)
     })
     it('should return all products entered from mock arrays data', async () => {
       productAdapter.createMany(productsMock)
-      const allProducts = await findAllProducts(productAdapter)
+      const allProducts = await getAllProducts(productAdapter)
       const expected = productsMock
       expect(allProducts).toEqual(expected)
     })
@@ -44,7 +44,7 @@ describe('findByIdProduct', () => {
       productAdapter = new JSAdapter<Product>('products')
     })
     it('should return an array of products', async () => {
-      const products = await productAdapter.findAll()
+      const products = await productAdapter.getAll()
       expect(Array.isArray(products)).toBe(true)
       expect(products.length).toBeGreaterThan(0)
     })

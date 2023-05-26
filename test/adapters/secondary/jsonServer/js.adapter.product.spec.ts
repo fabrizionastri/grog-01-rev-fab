@@ -14,7 +14,7 @@ describe('JSAdapter<Product>', () => {
   })
 
   it('should list all products', async () => {
-    const products = await productJSAdapter.findAll()
+    const products = await productJSAdapter.getAll()
     expect(products).toEqual(productsMock)
   })
 })

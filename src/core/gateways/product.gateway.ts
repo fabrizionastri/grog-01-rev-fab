@@ -1,4 +1,4 @@
 import { Product } from '../entities/product'
-import { Gateway } from './gateway'
+import { Adapter } from '../../adapters/adapter'
 
-export type ProductGateway = Gateway<Product>
+export type ProductGateway = Adapter<Product>

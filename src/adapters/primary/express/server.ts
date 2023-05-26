@@ -14,13 +14,13 @@ app.get('/', (_req: Request, res: Response) => {
 })
 
 app.get('/products', async (_req: Request, res: Response) => {
-  const products = await productAdapter.findAll()
+  const products = await productAdapter.getAll()
   res.send(JSON.stringify(products))
   // res.send('⚡️products')
 })
 
 app.get('/products/:id', async (req: Request, res: Response) => {
-  const product = await productAdapter.findById(req.params.id)
+  const product = await productAdapter.getById(req.params.id)
   res.send(JSON.stringify(product))
   // res.send('⚡️products')
 })

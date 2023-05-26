@@ -1,6 +1,6 @@
 import { Model, Document, Schema, model, Types } from 'mongoose'
 import { Entity } from '../../../core/entities/entity'
-import { Gateway } from '../../../core/gateways/gateway'
+import { Adapter } from '../../adapter'
 import { Product } from '../../../../src/core/entities/product'
 
 export interface ProductModel extends Product, Document {
@@ -15,16 +15,16 @@ const productSchema = new Schema<ProductModel>({
 
 export const ProductModel = model<Product>('Product', productSchema)
 
-export class MDBAdapter<T extends Entity & Document> implements Gateway<T> {
+export class MDBAdapter<T extends Entity & Document> implements Adapter<T> {
   constructor(private readonly model: Model<T>) {}
 
-  async findAll(): Promise<T[]> {
+  async getAll(): Promise<T[]> {
     const entities = await this.model.find().exec()
     return entities
   }
 
-  async findById(id: string): Promise<T | undefined> {
-    const entity = await this.model.findById(id).exec()
+  async getById(id: string): Promise<T | undefined> {
+    const entity = await this.model.getById(id).exec()
     return entity ?? undefined
   }
 
@@ -38,12 +38,11 @@ export class MDBAdapter<T extends Entity & Document> implements Gateway<T> {
 
   async update(entity: T): Promise<void> {
     const updates = entity.toObject()
-    await this.model.findByIdAndUpdate(entity.id, updates).exec()
+    await this.model.getByIdAndUpdate(entity.id, updates).exec()
   }
 
-  async delete(idOrEntity: T | string): Promise<void> {
-    const id = typeof idOrEntity === 'string' ? idOrEntity : idOrEntity.id
-    await this.model.findByIdAndDelete(id).exec()
+  async delete(id: string): Promise<void> {
+    await this.model.getByIdAndDelete(id).exec()
   }
 }
 
@@ -72,30 +71,30 @@ export class ProductMDBAdapter extends MDBAdapter<
 //     await ProductModel.deleteMany({})
 //   })
 
-//   describe('findAll', () => {
+//   describe('getAll', () => {
 //     it('should return all products', async () => {
-//       const result = await adapter.findAll()
+//       const result = await adapter.getAll()
 //       expect(result).toHaveLength(products.length)
 //     })
 //   })
 
-//   describe('findById', () => {
+//   describe('getById', () => {
 //     it('should return a product by ID', async () => {
 //       const product = products[0]
-//       const result = await adapter.findById(product.id)
+//       const result = await adapter.getById(product.id)
 //       expect(result).toBeDefined()
 //       expect(result?.name).toBe(product.name)
 //     })
 
 //     it('should return undefined for non-existent ID', async () => {
-//       const result = await adapter.findById('non-existent-id')
+//       const result = await adapter.getById('non-existent-id')
 //       expect(result).toBeUndefined()
 //     })
 
 //     it('should return a product with updated properties', async () => {
 //       const product = products[0]
 //       const updates = { name: 'Updated Product' }
-//       const result = await adapter.findByIdAndUpdate(product.id, updates)
+//       const result = await adapter.getByIdAndUpdate(product.id, updates)
 //       expect(result).toBeDefined()
 //       expect(result?.name).toBe(updates.name)
 //     })
@@ -109,7 +108,7 @@ export class ProductMDBAdapter extends MDBAdapter<
 //         description: 'A new product'
 //       }
 //       await adapter.create(newProduct)
-//       const result = await adapter.findById(newProduct.id)
+//       const result = await adapter.getById(newProduct.id)
 //       expect(result).toBeDefined()
 //       expect(result?.name).toBe(newProduct.name)
 //     })
@@ -130,7 +129,7 @@ export class ProductMDBAdapter extends MDBAdapter<
 //         }
 //       ]
 //       await adapter.createMany(newProducts)
-//       const result = await adapter.findAll()
+//       const result = await adapter.getAll()
 //       expect(result).toHaveLength(products.length + newProducts.length)
 //     })
 //   })
@@ -140,7 +139,7 @@ export class ProductMDBAdapter extends MDBAdapter<
 //       const product = products[0]
 //       const updates = { name: 'Updated Product' }
 //       await adapter.update({ ...product, ...updates })
-//       const result = await adapter.findById(product.id)
+//       const result = await adapter.getById(product.id)
 //       expect(result).toBeDefined()
 //       expect(result?.name).toBe(updates.name)
 //     })
@@ -150,14 +149,14 @@ export class ProductMDBAdapter extends MDBAdapter<
 //     it('should delete an existing product by ID', async () => {
 //       const product = products[0]
 //       await adapter.delete(product.id)
-//       const result = await adapter.findById(product.id)
+//       const result = await adapter.getById(product.id)
 //       expect(result).toBeUndefined()
 //     })
 
 //     it('should delete an existing product by entity', async () => {
 //       const product = products[0]
 //       await adapter.delete(product)
-//       const result = await adapter.findById(product.id)
+//       const result = await adapter.getById(product.id)
 //       expect(result).toBeUndefined()
 //     })
 //   })

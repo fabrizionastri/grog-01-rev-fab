@@ -1,14 +1,14 @@
 import { Entity } from '../../../core/entities/entity'
-import { Gateway } from '../../../core/gateways/gateway'
+import { Adapter } from '../../adapter'
 
-export class IMAdapter<T extends Entity> implements Gateway<T> {
+export class IMAdapter<T extends Entity> implements Adapter<T> {
   private entities: T[] = []
 
-  async findAll(): Promise<T[]> {
+  async getAll(): Promise<T[]> {
     return this.entities
   }
 
-  async findById(id: string): Promise<T | undefined> {
+  async getById(id: string): Promise<T | undefined> {
     return this.entities.find((entity) => entity.id === id)
   }
 
