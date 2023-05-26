@@ -3,16 +3,16 @@ import { IMAdapter } from '../../../src/adapters/secondary/inMemory/im.adapter'
 import { JSAdapter } from '../../../src/adapters/secondary/jsonServer/js.adapter'
 
 import { Product } from '../../../src/core/entities/product'
-import { listAllProducts } from '../../../src/core/usecases/listAllProducts'
+import { findAllProducts } from '../../../src/core/usecases/findAllProducts'
 
-describe('getProductById', () => {
+describe('findByIdProduct', () => {
   describe('IMAdapter<Product>', () => {
     let productAdapter: IMAdapter<Product> // on définit le type d'adapter qu'on va utiliser
     beforeEach(() => {
       productAdapter = new IMAdapter<Product>() // on purge avant chaque test
     })
     it('should return [] when there are no products', async () => {
-      const allProducts = await listAllProducts(productAdapter)
+      const allProducts = await findAllProducts(productAdapter)
       expect(allProducts).toEqual([])
     })
     it('should return all products entered manually', async () => {
@@ -33,7 +33,7 @@ describe('getProductById', () => {
     })
     it('should return all products entered from mock arrays data', async () => {
       productAdapter.createMany(productsMock)
-      const allProducts = await listAllProducts(productAdapter)
+      const allProducts = await findAllProducts(productAdapter)
       const expected = productsMock
       expect(allProducts).toEqual(expected)
     })

@@ -1,7 +1,7 @@
 import { Product } from '../entities/product'
 import { ProductGateway } from '../gateways/product.gateway'
 
-export async function getProductById(
+export async function findByIdProduct(
   id: string,
   productGateway: ProductGateway
 ): Promise<Product | undefined> {

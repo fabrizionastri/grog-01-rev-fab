@@ -2,7 +2,7 @@ import { productsMock } from '../../../mock/arrays/products'
 import { IMAdapter } from '../../../src/adapters/secondary/inMemory/im.adapter'
 import { Product } from '../../../src/core/entities/product'
 
-describe('listAllProducts', () => {
+describe('findAllProducts', () => {
   describe('IMAdapter<Product>', () => {
     let productAdapter: IMAdapter<Product> // on définit le type d'adapter qu'on va utiliser
     beforeEach(() => {
