@@ -1,58 +1,58 @@
-import { Model, Document, Schema, model, Types } from 'mongoose'
-import { Entity } from '../../../core/entities/entity'
-import { Adapter } from '../../adapter'
-import { Product } from '../../../../src/core/entities/product'
+// import { Model, Document, Schema, model, Types } from 'mongoose'
+// import { Entity } from '../../../core/entities/entity'
+// import { Adapter } from '../../adapter'
+// import { Product } from '../../../../src/core/entities/product'
 
-export interface ProductModel extends Product, Document {
-  _id: Types.ObjectId
-}
+// export interface ProductModel extends Product, Document {
+//   _id: Types.ObjectId
+// }
 
-const productSchema = new Schema<ProductModel>({
-  id: { type: String, required: true },
-  name: { type: String, required: true },
-  imgUrl: { type: String, required: true },
-})
+// const productSchema = new Schema<ProductModel>({
+//   id: { type: String, required: true },
+//   name: { type: String, required: true },
+//   imgUrl: { type: String, required: true },
+// })
 
-export const ProductModel = model<Product>('Product', productSchema)
+// export const ProductModel = model<Product>('Product', productSchema)
 
-export class MDBAdapter<T extends Entity & Document> implements Adapter<T> {
-  constructor(private readonly model: Model<T>) {}
+// export class MDBAdapter<T extends Entity & Document> implements Adapter<T> {
+//   constructor(private readonly model: Model<T>) {}
 
-  async getAll(): Promise<T[]> {
-    const entities = await this.model.find().exec()
-    return entities
-  }
+//   async getAll(): Promise<T[]> {
+//     const entities = await this.model.find().exec()
+//     return entities
+//   }
 
-  async getById(id: string): Promise<T | undefined> {
-    const entity = await this.model.getById(id).exec()
-    return entity ?? undefined
-  }
+//   async getById(id: string): Promise<T | undefined> {
+//     const entity = await this.model.getById(id).exec()
+//     return entity ?? undefined
+//   }
 
-  async create(entity: T): Promise<void> {
-    await this.model.create(entity)
-  }
+//   async create(entity: T): Promise<void> {
+//     await this.model.create(entity)
+//   }
 
-  async createMany(entities: T[]): Promise<void> {
-    await this.model.insertMany(entities)
-  }
+//   async createMany(entities: T[]): Promise<void> {
+//     await this.model.insertMany(entities)
+//   }
 
-  async update(entity: T): Promise<void> {
-    const updates = entity.toObject()
-    await this.model.getByIdAndUpdate(entity.id, updates).exec()
-  }
+//   async update(entity: T): Promise<void> {
+//     const updates = entity.toObject()
+//     await this.model.getByIdAndUpdate(entity.id, updates).exec()
+//   }
 
-  async delete(id: string): Promise<void> {
-    await this.model.getByIdAndDelete(id).exec()
-  }
-}
+//   async delete(id: string): Promise<void> {
+//     await this.model.getByIdAndDelete(id).exec()
+//   }
+// }
 
-export class ProductMDBAdapter extends MDBAdapter<
-  Product & Document & { _id: any }
-> {
-  constructor(model: Model<Product & Document & { _id: any }>) {
-    super(model)
-  }
-}
+// export class ProductMDBAdapter extends MDBAdapter<
+//   Product & Document & { _id: any }
+// > {
+//   constructor(model: Model<Product & Document & { _id: any }>) {
+//     super(model)
+//   }
+// }
 
 // describe('MDBAdapter', () => {
 //   let adapter: ProductMDBAdapter

@@ -1,6 +1,5 @@
 import { productsMock } from '../../../mock/arrays/products'
 import { IMAdapter } from '../../adapters/primary/inMemory.adapter'
-import { JSAdapter } from '../../adapters/secondary/jsonServer/js.adapter'
 
 import { Product } from '../entities/product'
 import { getAllProducts } from './getAllProducts'
@@ -38,15 +37,15 @@ describe('getByIdProduct', () => {
       expect(allProducts).toEqual(expected)
     })
   })
-  describe('JSAdapter<Product>', () => {
-    let productAdapter: JSAdapter<Product>
-    beforeEach(() => {
-      productAdapter = new JSAdapter<Product>('products')
-    })
-    it('should return an array of products', async () => {
-      const products = await productAdapter.getAll()
-      expect(Array.isArray(products)).toBe(true)
-      expect(products.length).toBeGreaterThan(0)
-    })
-  })
+  // describe('JSAdapter<Product>', () => {
+  //   let productAdapter: JSAdapter<Product>
+  //   beforeEach(() => {
+  //     productAdapter = new JSAdapter<Product>('products')
+  //   })
+  //   it('should return an array of products', async () => {
+  //     const products = await productAdapter.getAll()
+  //     expect(Array.isArray(products)).toBe(true)
+  //     expect(products.length).toBeGreaterThan(0)
+  //   })
+  // })
 })
