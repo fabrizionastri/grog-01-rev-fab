@@ -2,7 +2,7 @@ import { productsMock } from '../../../../mock/arrays/products'
 import { Product } from '../../../../src/core/entities/product'
 import { JSAdapter } from '../../../../src/adapters/secondary/jsonServer/js.adapter'
 
-describe('ProductJSAdapter', () => {
+describe('JSAdapter<Product>', () => {
   let productJSAdapter: JSAdapter<Product>
 
   beforeEach(() => {

@@ -8,5 +8,3 @@ export interface Gateway<T extends Entity> {
   update(entity: T): Promise<void>
   delete(id: string): Promise<void>
 }
-
-

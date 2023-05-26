@@ -8,7 +8,7 @@ const axios = Axios.create({
 })
 
 export class JSAdapter<T extends Entity> implements Gateway<T> {
-  constructor(private readonly resource: string) { }
+  constructor(private readonly resource: string) {}
 
   async findAll(): Promise<T[]> {
     const res = await axios.get<T[]>(`/${this.resource}`)
@@ -24,6 +24,10 @@ export class JSAdapter<T extends Entity> implements Gateway<T> {
 
   async create(entity: T): Promise<void> {
     await axios.post(`/${this.resource}`, entity)
+  }
+
+  async createMany(entities: T[]): Promise<void> {
+    await axios.post(`/${this.resource}`, entities)
   }
 
   async update(entity: T): Promise<void> {

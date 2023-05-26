@@ -2,7 +2,6 @@ import { Model, Document, Schema, model, Types } from 'mongoose'
 import { Entity } from '../../../core/entities/entity'
 import { Gateway } from '../../../core/gateways/gateway'
 import { Product } from '../../../../src/core/entities/product'
-import { productsMock } from '../../../../mock/arrays/products'
 
 export interface ProductModel extends Product, Document {
   _id: Types.ObjectId
@@ -11,14 +10,13 @@ export interface ProductModel extends Product, Document {
 const productSchema = new Schema<ProductModel>({
   id: { type: String, required: true },
   name: { type: String, required: true },
-  imgUrl: { type: String, required: true }
+  imgUrl: { type: String, required: true },
 })
 
 export const ProductModel = model<Product>('Product', productSchema)
 
-
 export class MDBAdapter<T extends Entity & Document> implements Gateway<T> {
-  constructor(private readonly model: Model<T>) { }
+  constructor(private readonly model: Model<T>) {}
 
   async findAll(): Promise<T[]> {
     const entities = await this.model.find().exec()
@@ -49,7 +47,9 @@ export class MDBAdapter<T extends Entity & Document> implements Gateway<T> {
   }
 }
 
-export class ProductMDBAdapter extends MDBAdapter<Product & Document & { _id: any }> {
+export class ProductMDBAdapter extends MDBAdapter<
+  Product & Document & { _id: any }
+> {
   constructor(model: Model<Product & Document & { _id: any }>) {
     super(model)
   }

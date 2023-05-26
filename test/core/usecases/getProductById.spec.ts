@@ -3,7 +3,7 @@ import { IMAdapter } from '../../../src/adapters/secondary/inMemory/im.adapter'
 import { Product } from '../../../src/core/entities/product'
 
 describe('listAllProducts', () => {
-  describe('InMemoryProductAdapter', () => {
+  describe('IMAdapter<Product>', () => {
     let productAdapter: IMAdapter<Product> // on définit le type d'adapter qu'on va utiliser
     beforeEach(() => {
       productAdapter = new IMAdapter<Product>() // on purge avant chaque test

@@ -1,17 +1,18 @@
 import { productsMock } from '../../../mock/arrays/products'
-import { InMemoryProductAdapter } from '../../../src/adapters/secondary/inMemory/product.im.adapter'
-import { JsonServerProductAdapter } from '../../adapters/secondary/jsonServer/product.js.adapter.xold'
+import { IMAdapter } from '../../../src/adapters/secondary/inMemory/im.adapter'
+import { JSAdapter } from '../../../src/adapters/secondary/jsonServer/js.adapter'
+
 import { Product } from '../../../src/core/entities/product'
 import { listAllProducts } from '../../../src/core/usecases/listAllProducts'
 
 describe('getProductById', () => {
-  describe('InMemoryProductAdapter', () => {
-    let productGateway: InMemoryProductAdapter // on définit le type d'adapter qu'on va utiliser
+  describe('IMAdapter<Product>', () => {
+    let productAdapter: IMAdapter<Product> // on définit le type d'adapter qu'on va utiliser
     beforeEach(() => {
-      productGateway = new InMemoryProductAdapter() // on purge avant chaque test
+      productAdapter = new IMAdapter<Product>() // on purge avant chaque test
     })
     it('should return [] when there are no products', async () => {
-      const allProducts = await listAllProducts(productGateway)
+      const allProducts = await listAllProducts(productAdapter)
       expect(allProducts).toEqual([])
     })
     it('should return all products entered manually', async () => {
@@ -25,25 +26,25 @@ describe('getProductById', () => {
         name: 'Pull',
         imgUrl: 'assets/pull.png',
       }
-      productGateway.feedWith(tshirt, pull)
-      const allProducts = await listAllProducts(productGateway)
+      productAdapter.createMany([tshirt, pull])
+      const allProducts = await productAdapter.findAll()
       const expected: Product[] = [tshirt, pull]
       expect(allProducts).toEqual(expected)
     })
     it('should return all products entered from mock arrays data', async () => {
-      productGateway.feedWith(...productsMock)
-      const allProducts = await listAllProducts(productGateway)
+      productAdapter.createMany(productsMock)
+      const allProducts = await listAllProducts(productAdapter)
       const expected = productsMock
       expect(allProducts).toEqual(expected)
     })
   })
-  describe('JsonServerProductAdapter', () => {
-    let productAdapter: JsonServerProductAdapter
+  describe('JSAdapter<Product>', () => {
+    let productAdapter: JSAdapter<Product>
     beforeEach(() => {
-      productAdapter = new JsonServerProductAdapter()
+      productAdapter = new JSAdapter<Product>('products')
     })
     it('should return an array of products', async () => {
-      const products = await listAllProducts(productAdapter)
+      const products = await productAdapter.findAll()
       expect(Array.isArray(products)).toBe(true)
       expect(products.length).toBeGreaterThan(0)
     })
